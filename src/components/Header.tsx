@@ -24,7 +24,7 @@ export default function Header({ cartTotal, cartCount }: Props) {
           </div>
           <div>
             <div className="font-bold text-blue-700 text-sm leading-tight">MenuBet </div>
-            <div className="text-gray-500 text-xs">Smart &amp; Menu</div>
+            <div className="text-gray-500 text-xs">Smart Menu</div>
           </div>
         </div>
 
