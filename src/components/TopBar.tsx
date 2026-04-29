@@ -1,11 +1,11 @@
 import { Phone, MapPin, Clock, Facebook, Instagram, MessageCircle, ChevronDown } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { LangCode } from '../i18n/translations';
 
 const PHONE_NUMBER = '+251911234567';
 
-const languages: { code: LangCode; name: string }[] = [
+const allLanguages: { code: LangCode; name: string }[] = [
   { code: 'am', name: 'Amharic' },
   { code: 'en', name: 'English' },
   { code: 'er', name: 'Eritrean' },
@@ -17,9 +17,27 @@ const languages: { code: LangCode; name: string }[] = [
   { code: 'ti', name: 'Tigrigna' },
 ];
 
+const langLabel = (code: LangCode) => {
+  const lang = allLanguages.find(l => l.code === code);
+  return lang ? lang.name : code.toUpperCase();
+};
+
 export default function TopBar() {
   const { language, setLanguage, t } = useApp();
   const [showLangMenu, setShowLangMenu] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setShowLangMenu(false);
+      }
+    };
+    if (showLangMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showLangMenu]);
 
   const handlePhoneClick = () => {
     window.location.href = `tel:${PHONE_NUMBER}`;
@@ -29,6 +47,20 @@ export default function TopBar() {
     facebook: 'https://facebook.com',
     instagram: 'https://instagram.com',
     whatsapp: `https://wa.me/251911234567`,
+  };
+
+  // Determine which 2 languages to show inline
+  const isDefaultLang = language === 'en' || language === 'am';
+  const visibleLangs: LangCode[] = isDefaultLang
+    ? ['en', 'am']
+    : [language, language === 'en' ? 'am' : 'en'];
+
+  // Dropdown languages: everything except the two visible ones
+  const dropdownLangs = allLanguages.filter(l => !visibleLangs.includes(l.code));
+
+  const handleSelect = (code: LangCode) => {
+    setLanguage(code);
+    setShowLangMenu(false);
   };
 
   return (
@@ -82,22 +114,36 @@ export default function TopBar() {
               <MessageCircle size={15} />
             </a>
           </div>
-          <div className="relative">
+
+          {/* Language Selector - 2 visible + dropdown */}
+          <div className="relative flex items-center gap-1" ref={dropdownRef}>
+            {visibleLangs.map(code => (
+              <button
+                key={code}
+                onClick={() => handleSelect(code)}
+                className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-all ${
+                  language === code
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-gray-600 hover:bg-gray-200 hover:text-blue-600'
+                }`}
+              >
+                {code === 'en' ? 'EN' : langLabel(code)}
+              </button>
+            ))}
+
             <button
               onClick={() => setShowLangMenu(!showLangMenu)}
-              className="flex items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors font-medium px-2 py-1"
+              className="flex items-center gap-0.5 text-gray-500 hover:text-blue-600 transition-colors px-1 py-1"
             >
-              {language.toUpperCase()} <ChevronDown size={13} className={`transition-transform ${showLangMenu ? 'rotate-180' : ''}`} />
+              <ChevronDown size={13} className={`transition-transform duration-200 ${showLangMenu ? 'rotate-180' : ''}`} />
             </button>
+
             {showLangMenu && (
-              <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
-                {languages.map(lang => (
+              <div className="absolute right-0 top-full mt-1 w-44 bg-white border border-gray-200 rounded-lg shadow-lg z-50 py-1">
+                {dropdownLangs.map(lang => (
                   <button
                     key={lang.code}
-                    onClick={() => {
-                      setLanguage(lang.code);
-                      setShowLangMenu(false);
-                    }}
+                    onClick={() => handleSelect(lang.code)}
                     className={`w-full text-left px-4 py-2 text-sm transition-colors ${
                       language === lang.code
                         ? 'bg-blue-600 text-white font-semibold'
