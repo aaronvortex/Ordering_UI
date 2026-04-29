@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
-import translations, { LangCode, Translations } from '../i18n/translations';
 
 export type CartItem = {
   id: number;
@@ -20,9 +19,6 @@ type AppContextType = {
   clearCart: () => void;
   cartCount: number;
   cartTotal: number;
-  language: LangCode;
-  setLanguage: (lang: LangCode) => void;
-  t: Translations;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -30,11 +26,9 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export function AppProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [favorites, setFavorites] = useState<Set<number>>(new Set());
-  const [language, setLanguage] = useState<LangCode>('en');
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const cartTotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const t = translations[language];
 
   const addToCart = (item: Omit<CartItem, 'quantity'>) => {
     setCartItems(prev => {
@@ -83,9 +77,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
         clearCart,
         cartCount,
         cartTotal,
-        language,
-        setLanguage,
-        t,
       }}
     >
       {children}

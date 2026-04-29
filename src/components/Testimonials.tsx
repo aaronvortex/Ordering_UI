@@ -1,6 +1,5 @@
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { useState } from 'react';
-import { useApp } from '../context/AppContext';
 
 const testimonials = [
   {
@@ -27,7 +26,6 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
-  const { t } = useApp();
   const [current, setCurrent] = useState(0);
 
   const next = () => setCurrent((current + 1) % testimonials.length);
@@ -35,7 +33,7 @@ export default function Testimonials() {
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-12">
-      <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-12">{t.whatGuestsSay}</h2>
+      <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-12">What Our Guests Say</h2>
 
       <div className="relative flex items-center gap-6">
         <button
@@ -65,7 +63,7 @@ export default function Testimonials() {
             />
             <div>
               <p className="font-semibold text-gray-900">{testimonials[current].author}</p>
-              <p className="text-sm text-gray-500">{t.verifiedGuest}</p>
+              <p className="text-sm text-gray-500">Verified Guest</p>
             </div>
           </div>
         </div>

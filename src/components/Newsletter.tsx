@@ -1,9 +1,7 @@
 import { Mail } from 'lucide-react';
 import { useState } from 'react';
-import { useApp } from '../context/AppContext';
 
 export default function Newsletter() {
-  const { t } = useApp();
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
@@ -25,8 +23,8 @@ export default function Newsletter() {
               <Mail size={28} className="text-amber-400" />
             </div>
             <div>
-              <h3 className="text-white font-bold text-xl mb-1">{t.stayUpdated}</h3>
-              <p className="text-blue-200 text-sm">{t.newsletterDesc}</p>
+              <h3 className="text-white font-bold text-xl mb-1">Stay Updated with Our Latest Offers</h3>
+              <p className="text-blue-200 text-sm">Subscribe to get special offers, new menu items, and updates.</p>
             </div>
           </div>
 
@@ -34,7 +32,7 @@ export default function Newsletter() {
             <div className="flex gap-3">
               <input
                 type="email"
-                placeholder={t.enterEmail}
+                placeholder="Enter your email address"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 className="flex-1 bg-blue-950 text-white placeholder-blue-300 border border-blue-700 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
@@ -48,7 +46,7 @@ export default function Newsletter() {
                     : 'bg-amber-400 hover:bg-amber-300 text-gray-900 shadow-lg hover:shadow-xl'
                 }`}
               >
-                {submitted ? t.subscribed : t.subscribe}
+                {submitted ? 'Subscribed!' : 'Subscribe'}
               </button>
             </div>
           </form>

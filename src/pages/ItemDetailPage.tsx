@@ -10,7 +10,7 @@ import { menuData } from '../data/menuData';
 export default function ItemDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { cartCount, cartTotal, toggleFavorite, isFavorited, addToCart, t } = useApp();
+  const { cartCount, cartTotal, toggleFavorite, isFavorited, addToCart } = useApp();
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
 
@@ -26,9 +26,9 @@ export default function ItemDetailPage() {
         <Header cartTotal={cartTotal} cartCount={cartCount} />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">{t.itemNotFound}</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">Item not found</h1>
             <Link to="/" className="text-blue-600 hover:text-blue-700">
-              {t.backToMenu}
+              Back to Menu
             </Link>
           </div>
         </div>
@@ -56,7 +56,7 @@ export default function ItemDetailPage() {
           className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors mb-8 font-semibold"
         >
           <ArrowLeft size={20} />
-          {t.back}
+          Back
         </button>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -87,16 +87,16 @@ export default function ItemDetailPage() {
 
             {/* Availability */}
             <div className="mb-8">
-              <h3 className="font-bold text-gray-900 mb-2">{t.availability}</h3>
+              <h3 className="font-bold text-gray-900 mb-2">Availability</h3>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span className="text-gray-700 font-semibold">{t.availableNow}</span>
+                <span className="text-gray-700 font-semibold">Available Now</span>
               </div>
             </div>
 
             {/* Quantity */}
             <div className="mb-8">
-              <h3 className="font-bold text-gray-900 mb-4">{t.quantity}</h3>
+              <h3 className="font-bold text-gray-900 mb-4">Quantity</h3>
               <div className="flex items-center gap-4 bg-gray-100 rounded-lg p-4 w-fit">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -124,7 +124,7 @@ export default function ItemDetailPage() {
                     : 'bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-200'
                 }`}
               >
-                {added ? t.addedToCart : t.addToCart}
+                {added ? 'Added to Cart!' : 'Add to Cart'}
               </button>
               <button
                 onClick={() => toggleFavorite(item.id)}
@@ -143,19 +143,19 @@ export default function ItemDetailPage() {
 
             {/* Features */}
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6">
-              <h3 className="font-bold text-gray-900 mb-4">{t.whyChoose}</h3>
+              <h3 className="font-bold text-gray-900 mb-4">Why choose this item?</h3>
               <ul className="space-y-2 text-gray-700">
                 <li className="flex items-center gap-2">
-                  <span className="text-blue-600 font-bold">✓</span> {t.freshIngredientsItem}
+                  <span className="text-blue-600 font-bold">✓</span> Fresh ingredients
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-blue-600 font-bold">✓</span> {t.chefsSpecialty}
+                  <span className="text-blue-600 font-bold">✓</span> Chef's specialty
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-blue-600 font-bold">✓</span> {t.premiumQuality}
+                  <span className="text-blue-600 font-bold">✓</span> Premium quality
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-blue-600 font-bold">✓</span> {t.fastDelivery}
+                  <span className="text-blue-600 font-bold">✓</span> Fast delivery
                 </li>
               </ul>
             </div>

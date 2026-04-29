@@ -1,7 +1,6 @@
 import { Heart, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useApp } from '../context/AppContext';
 import { MenuItem } from '../data/menuData';
 
 type Props = {
@@ -17,7 +16,6 @@ export default function ProductCard({
   onToggleFavorite,
   onAddToCart,
 }: Props) {
-  const { t } = useApp();
   const [added, setAdded] = useState(false);
 
   const handleAdd = () => {
@@ -27,7 +25,7 @@ export default function ProductCard({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group hover:-translate-y-1 border border-gray-100 relative">
+    <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group hover:-translate-y-1 border border-gray-100">
       <Link to={`/item/${item.id}`}>
         <div className="relative">
           <img
@@ -50,7 +48,7 @@ export default function ProductCard({
 
       <button
         onClick={onToggleFavorite}
-        className="absolute bottom-16 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-transform z-10"
+        className="absolute bottom-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-transform z-10"
       >
         <Heart
           size={15}
@@ -76,10 +74,10 @@ export default function ProductCard({
             }`}
           >
             {added ? (
-              t.added
+              'Added!'
             ) : (
               <>
-                <Plus size={14} /> {t.add}
+                <Plus size={14} /> Add
               </>
             )}
           </button>

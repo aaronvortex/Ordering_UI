@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 export default function CartPage() {
-  const { cartItems, cartTotal, removeFromCart, updateCartQuantity, cartCount, t } = useApp();
+  const { cartItems, cartTotal, removeFromCart, updateCartQuantity, cartCount } = useApp();
 
   return (
     <div className="min-h-screen bg-white flex flex-col" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -17,22 +17,22 @@ export default function CartPage() {
         <div className="flex items-center gap-3 mb-8">
           <Link to="/" className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors">
             <ArrowLeft size={20} />
-            {t.backToMenu}
+            Back to Menu
           </Link>
         </div>
 
-        <h1 className="text-3xl font-extrabold text-gray-900 mb-8">{t.shoppingCart}</h1>
+        <h1 className="text-3xl font-extrabold text-gray-900 mb-8">Shopping Cart</h1>
 
         {cartItems.length === 0 ? (
           <div className="text-center py-16">
             <div className="text-6xl mb-4">🛒</div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">{t.cartEmpty}</h2>
-            <p className="text-gray-500 mb-8">{t.cartEmptyDesc}</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h2>
+            <p className="text-gray-500 mb-8">Add some delicious items from our menu!</p>
             <Link
               to="/"
               className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold transition-all"
             >
-              {t.continueShopping}
+              Continue Shopping
             </Link>
           </div>
         ) : (
@@ -80,7 +80,7 @@ export default function CartPage() {
                         className="flex items-center gap-1 text-red-500 hover:text-red-700 transition-colors text-sm font-semibold"
                       >
                         <Trash2 size={14} />
-                        {t.remove}
+                        Remove
                       </button>
                     </div>
                   </div>
@@ -90,40 +90,37 @@ export default function CartPage() {
 
             <div className="lg:col-span-1">
               <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 sticky top-24">
-                <h2 className="font-bold text-gray-900 text-lg mb-4">{t.orderSummary}</h2>
+                <h2 className="font-bold text-gray-900 text-lg mb-4">Order Summary</h2>
 
                 <div className="space-y-3 mb-6 pb-6 border-b border-blue-200">
                   <div className="flex justify-between text-gray-700">
-                    <span>{t.subtotal}</span>
+                    <span>Subtotal</span>
                     <span className="font-semibold">${cartTotal.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-gray-700">
-                    <span>{t.delivery}</span>
-                    <span className="font-semibold">{t.free}</span>
+                    <span>Delivery</span>
+                    <span className="font-semibold">Free</span>
                   </div>
                   <div className="flex justify-between text-gray-700">
-                    <span>{t.tax}</span>
+                    <span>Tax (10%)</span>
                     <span className="font-semibold">${(cartTotal * 0.1).toLocaleString()}</span>
                   </div>
                 </div>
 
                 <div className="flex justify-between mb-6">
-                  <span className="font-bold text-gray-900">{t.totalLabel}</span>
+                  <span className="font-bold text-gray-900">Total</span>
                   <span className="font-bold text-2xl text-blue-600">
                     ${(cartTotal * 1.1).toLocaleString()}
                   </span>
                 </div>
 
                 <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-full transition-all shadow-lg shadow-blue-200 hover:shadow-xl">
-                  {t.proceedCheckout}
+                  Proceed to Checkout
                 </button>
 
-                <Link
-                  to="/"
-                  className="block w-full mt-3 border border-blue-300 text-blue-600 hover:bg-blue-50 font-semibold py-3 rounded-full transition-all text-center"
-                >
-                  {t.continueShopping}
-                </Link>
+                <button className="w-full mt-3 border border-blue-300 text-blue-600 hover:bg-blue-50 font-semibold py-3 rounded-full transition-all">
+                  Continue Shopping
+                </button>
               </div>
             </div>
           </div>
