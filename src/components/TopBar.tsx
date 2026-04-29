@@ -41,7 +41,7 @@ export default function TopBar() {
             title={t.callUs}
           >
             <Phone size={13} className="text-blue-600 group-hover:scale-110 transition-transform" />
-            <span className="hidden sm:inline">+251 91 123 4567</span>
+            <span className="hidden sm:inline">+251 94 221 9997</span>
           </button>
           <span className="flex items-center gap-1.5 hidden md:flex">
             <MapPin size={13} className="text-blue-600" />
