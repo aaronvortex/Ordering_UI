@@ -23,8 +23,8 @@ export default function Header({ cartTotal, cartCount }: Props) {
             <Utensils size={20} className="text-white" />
           </div>
           <div>
-            <div className="font-bold text-blue-700 text-sm leading-tight">Tewodros Belay Int.</div>
-            <div className="text-gray-500 text-xs">Hotel &amp; Spa</div>
+            <div className="font-bold text-blue-700 text-sm leading-tight">MenuBet </div>
+            <div className="text-gray-500 text-xs">Smart &amp; Menu</div>
           </div>
         </div>
 
