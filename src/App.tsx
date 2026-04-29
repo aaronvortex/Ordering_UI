@@ -6,6 +6,10 @@ import CategoryTabs from './components/CategoryTabs';
 import ProductGrid from './components/ProductGrid';
 import Features from './components/Features';
 import CTABanner from './components/CTABanner';
+import PromoCards from './components/PromoCards';
+import Testimonials from './components/Testimonials';
+import Newsletter from './components/Newsletter';
+import Footer from './components/Footer';
 
 export type CartItem = {
   id: number;
@@ -40,6 +44,10 @@ function App() {
       <ProductGrid activeCategory={activeCategory} onAddToCart={addToCart} />
       <Features />
       <CTABanner cartCount={cartCount} cartTotal={cartTotal} />
+      <PromoCards />
+      <Testimonials />
+      <Newsletter />
+      <Footer />
     </div>
   );
 }
