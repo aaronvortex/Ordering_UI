@@ -651,7 +651,7 @@ const translations: Record<LangCode, Translations> = {
     footerBrand: 'MenuBet',
     footerBrandSub: 'Digital Menu',
     footerBrandDesc: "Vivez le luxe, le confort et l'hospitalité exceptionnelle.",
-    copyright: '© 2024 Hôtel International Tewodros Belay. Tous droits réservés.',
+    copyright: '© 2024 Digital Solutions by MenuBet Team. Tous droits réservés.',
     shoppingCart: 'Panier',
     backToMenu: 'Retour au Menu',
     cartEmpty: 'Votre panier est vide',
