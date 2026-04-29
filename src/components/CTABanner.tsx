@@ -1,4 +1,5 @@
 import { ShoppingCart, Headphones } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 type Props = {
   cartCount: number;
@@ -21,10 +22,13 @@ export default function CTABanner({ cartCount, cartTotal }: Props) {
           </div>
         </div>
         <div className="flex flex-col items-center gap-1 flex-shrink-0">
-          <button className="flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-gray-900 font-bold px-7 py-3 rounded-full transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 text-sm">
+          <Link
+            to="/cart"
+            className="flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-gray-900 font-bold px-7 py-3 rounded-full transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 text-sm"
+          >
             <ShoppingCart size={16} />
             View Cart ({cartCount})
-          </button>
+          </Link>
           <span className="text-blue-200 text-xs font-medium">Total: ${cartTotal.toLocaleString()}</span>
         </div>
       </div>

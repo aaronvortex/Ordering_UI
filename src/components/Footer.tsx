@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="bg-gray-900 text-gray-200">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
@@ -31,18 +31,6 @@ export default function Footer() {
               <li><a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">Our Menu</a></li>
               <li><a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">Gallery</a></li>
               <li><a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">Contact Us</a></li>
-            </ul>
-          </div>
-
-          {/* Our Menu */}
-          <div>
-            <h4 className="font-bold text-white mb-4 text-sm">Our Menu</h4>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">Mains</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">Grill</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">Specials</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">Drinks</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">Alcohol</a></li>
             </ul>
           </div>
 
