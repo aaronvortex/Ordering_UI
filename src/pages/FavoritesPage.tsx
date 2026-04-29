@@ -8,7 +8,7 @@ import ProductCard from '../components/ProductCard';
 import { menuData } from '../data/menuData';
 
 export default function FavoritesPage() {
-  const { favorites, cartCount, cartTotal, toggleFavorite, addToCart } = useApp();
+  const { favorites, cartCount, cartTotal, toggleFavorite, addToCart, t } = useApp();
 
   const favoriteItems = Object.values(menuData)
     .flat()
@@ -23,23 +23,23 @@ export default function FavoritesPage() {
         <div className="flex items-center gap-3 mb-8">
           <Link to="/" className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors">
             <ArrowLeft size={20} />
-            Back to Menu
+            {t.backToMenu}
           </Link>
         </div>
 
-        <h1 className="text-3xl font-extrabold text-gray-900 mb-2">My Favorites</h1>
-        <p className="text-gray-500 mb-8">{favoriteItems.length} items saved</p>
+        <h1 className="text-3xl font-extrabold text-gray-900 mb-2">{t.myFavorites}</h1>
+        <p className="text-gray-500 mb-8">{favoriteItems.length} {t.itemsSaved}</p>
 
         {favoriteItems.length === 0 ? (
           <div className="text-center py-16">
             <Heart size={64} className="mx-auto mb-4 text-gray-300" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">No favorite items yet</h2>
-            <p className="text-gray-500 mb-8">Start adding items to your favorites to save them for later</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">{t.noFavorites}</h2>
+            <p className="text-gray-500 mb-8">{t.noFavoritesDesc}</p>
             <Link
               to="/"
               className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold transition-all"
             >
-              Browse Menu
+              {t.browseMenu}
             </Link>
           </div>
         ) : (

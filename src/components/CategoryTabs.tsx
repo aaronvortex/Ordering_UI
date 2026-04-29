@@ -1,3 +1,5 @@
+import { useApp } from '../context/AppContext';
+
 type Props = {
   activeCategory: string;
   setActiveCategory: (cat: string) => void;
@@ -8,11 +10,20 @@ const categories = [
   { label: 'Sandwich', emoji: '🥪' },
   { label: 'Salad', emoji: '🥗' },
   { label: 'Breakfast', emoji: '🍳' },
-];
+] as const;
+
+const categoryKeyMap: Record<string, string> = {
+  Chicken: 'chicken',
+  Sandwich: 'sandwich',
+  Salad: 'salad',
+  Breakfast: 'breakfast',
+};
 
 export default function CategoryTabs({ activeCategory, setActiveCategory }: Props) {
+  const { t } = useApp();
+
   return (
-    <div className="bg-white border-y border-gray-100 shadow-sm">
+    <div className="bg-white border-y border-gray-100 shadow-sm" id="specials">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide">
           {categories.map(cat => (
@@ -26,7 +37,7 @@ export default function CategoryTabs({ activeCategory, setActiveCategory }: Prop
               }`}
             >
               <span className="text-lg">{cat.emoji}</span>
-              {cat.label}
+              {t[categoryKeyMap[cat.label] as keyof typeof t]}
             </button>
           ))}
         </div>
