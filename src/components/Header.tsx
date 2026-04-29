@@ -1,6 +1,8 @@
-import { Search, ShoppingCart, Utensils, X, Star, Heart } from 'lucide-react';
+import { Search, ShoppingCart, Utensils, X, Heart } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useApp } from '../context/AppContext';
+import { menuData } from '../data/menuData';
 
 type Props = {
   cartTotal: number;
@@ -8,24 +10,19 @@ type Props = {
 };
 
 const navItems = [
-  { label: 'Mains', icon: '🍽️' },
-  { label: 'Grill', icon: '🥩' },
-  { label: 'Specials', icon: '⭐', active: true },
-  { label: 'Drinks', icon: '🥤' },
-  { label: 'Alcohol', icon: '🍷' },
-];
-
-const allItems = [
-  { id: 1, name: 'Grilled Chicken', category: 'Chicken', price: 650 },
-  { id: 2, name: 'Club Sandwich', category: 'Sandwich', price: 380 },
-  { id: 3, name: 'Caesar Salad', category: 'Salad', price: 290 },
-  { id: 4, name: 'Full English Breakfast', category: 'Breakfast', price: 480 },
-];
+  { key: 'mains', icon: '🍽️' },
+  { key: 'grill', icon: '🥩' },
+  { key: 'specials', icon: '⭐', active: true },
+  { key: 'drinks', icon: '🥤' },
+  { key: 'alcohol', icon: '🍷' },
+] as const;
 
 export default function Header({ cartTotal, cartCount }: Props) {
+  const { t } = useApp();
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
+  const allItems = Object.values(menuData).flat();
   const searchResults = searchQuery
     ? allItems.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
     : [];
@@ -48,7 +45,7 @@ export default function Header({ cartTotal, cartCount }: Props) {
         <nav className="hidden md:flex items-center gap-1">
           {navItems.map(item => (
             <button
-              key={item.label}
+              key={item.key}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${
                 item.active
                   ? 'bg-blue-600 text-white shadow-md shadow-blue-200'
@@ -56,7 +53,7 @@ export default function Header({ cartTotal, cartCount }: Props) {
               }`}
             >
               <span className="text-base">{item.icon}</span>
-              {item.label}
+              {t[item.key as keyof typeof t]}
             </button>
           ))}
         </nav>
@@ -77,7 +74,7 @@ export default function Header({ cartTotal, cartCount }: Props) {
                 <div className="flex items-center gap-2 mb-3">
                   <input
                     type="text"
-                    placeholder="Search items..."
+                    placeholder={t.searchItems}
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
                     className="flex-1 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
@@ -91,17 +88,22 @@ export default function Header({ cartTotal, cartCount }: Props) {
                 {searchResults.length > 0 ? (
                   <div className="space-y-2 max-h-64 overflow-y-auto">
                     {searchResults.map(item => (
-                      <div key={item.id} className="p-2 hover:bg-gray-50 rounded cursor-pointer transition-colors">
+                      <Link
+                        key={item.id}
+                        to={`/item/${item.id}`}
+                        onClick={() => setShowSearch(false)}
+                        className="block p-2 hover:bg-gray-50 rounded cursor-pointer transition-colors"
+                      >
                         <p className="font-semibold text-gray-900 text-sm">{item.name}</p>
                         <p className="text-gray-500 text-xs">{item.category}</p>
                         <p className="text-blue-600 font-bold text-sm">${item.price}</p>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 ) : searchQuery ? (
-                  <p className="text-gray-500 text-sm text-center py-4">No items found</p>
+                  <p className="text-gray-500 text-sm text-center py-4">{t.noItemsFound}</p>
                 ) : (
-                  <p className="text-gray-500 text-sm text-center py-4">Type to search...</p>
+                  <p className="text-gray-500 text-sm text-center py-4">{t.typeToSearch}</p>
                 )}
               </div>
             )}
@@ -110,7 +112,7 @@ export default function Header({ cartTotal, cartCount }: Props) {
           <Link
             to="/favorites"
             className="w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center hover:bg-amber-200 transition-colors text-amber-600"
-            title="My Favorites"
+            title={t.myFavorites}
           >
             <Heart size={18} />
           </Link>

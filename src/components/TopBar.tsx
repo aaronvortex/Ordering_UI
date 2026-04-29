@@ -1,22 +1,24 @@
 import { Phone, MapPin, Clock, Facebook, Instagram, MessageCircle, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
+import { useApp } from '../context/AppContext';
+import { LangCode } from '../i18n/translations';
 
 const PHONE_NUMBER = '+251911234567';
 
-const languages = [
-  { code: 'en', name: 'English' },
+const languages: { code: LangCode; name: string }[] = [
   { code: 'am', name: 'Amharic' },
-  { code: 'om', name: 'Affan Oromo' },
-  { code: 'ti', name: 'Tigrigna' },
+  { code: 'en', name: 'English' },
+  { code: 'er', name: 'Eritrean' },
   { code: 'fr', name: 'French' },
   { code: 'hi', name: 'Hindi' },
-  { code: 'es', name: 'Spanish' },
   { code: 'it', name: 'Italian' },
-  { code: 'er', name: 'Eritrean' },
+  { code: 'om', name: 'Oromo' },
+  { code: 'es', name: 'Spanish' },
+  { code: 'ti', name: 'Tigrigna' },
 ];
 
 export default function TopBar() {
-  const [selectedLang, setSelectedLang] = useState('en');
+  const { language, setLanguage, t } = useApp();
   const [showLangMenu, setShowLangMenu] = useState(false);
 
   const handlePhoneClick = () => {
@@ -36,18 +38,18 @@ export default function TopBar() {
           <button
             onClick={handlePhoneClick}
             className="flex items-center gap-1.5 hover:text-blue-700 transition-colors cursor-pointer group"
-            title="Call us"
+            title={t.callUs}
           >
             <Phone size={13} className="text-blue-600 group-hover:scale-110 transition-transform" />
             <span className="hidden sm:inline">+251 91 123 4567</span>
           </button>
           <span className="flex items-center gap-1.5 hidden md:flex">
             <MapPin size={13} className="text-blue-600" />
-            Addis Ababa, Ethiopia
+            {t.location}
           </span>
           <span className="flex items-center gap-1.5 hidden lg:flex">
             <Clock size={13} className="text-blue-600" />
-            07:00 AM – 11:00 PM
+            {t.hours}
           </span>
         </div>
         <div className="flex items-center gap-4">
@@ -85,19 +87,19 @@ export default function TopBar() {
               onClick={() => setShowLangMenu(!showLangMenu)}
               className="flex items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors font-medium px-2 py-1"
             >
-              {selectedLang.toUpperCase()} <ChevronDown size={13} className={`transition-transform ${showLangMenu ? 'rotate-180' : ''}`} />
+              {language.toUpperCase()} <ChevronDown size={13} className={`transition-transform ${showLangMenu ? 'rotate-180' : ''}`} />
             </button>
             {showLangMenu && (
-              <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+              <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
                 {languages.map(lang => (
                   <button
                     key={lang.code}
                     onClick={() => {
-                      setSelectedLang(lang.code);
+                      setLanguage(lang.code);
                       setShowLangMenu(false);
                     }}
                     className={`w-full text-left px-4 py-2 text-sm transition-colors ${
-                      selectedLang === lang.code
+                      language === lang.code
                         ? 'bg-blue-600 text-white font-semibold'
                         : 'text-gray-700 hover:bg-gray-100'
                     }`}
