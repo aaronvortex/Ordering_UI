@@ -215,7 +215,7 @@ const translations: Record<LangCode, Translations> = {
     footerBrand: 'MenuBet',
     footerBrandSub: 'Digital Menu',
     footerBrandDesc: 'Experience luxury, comfort, and exceptional hospitality.',
-    copyright: '© 2024 Tewodros Belay International Hotel. All rights reserved.',
+    copyright: '© 2024 MenuBet Digital Menu Team. All rights reserved.',
     shoppingCart: 'Shopping Cart',
     backToMenu: 'Back to Menu',
     cartEmpty: 'Your cart is empty',
