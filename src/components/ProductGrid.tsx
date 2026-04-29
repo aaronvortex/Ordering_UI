@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default function ProductGrid({ activeCategory, onAddToCart }: Props) {
-  const { isFavorited, toggleFavorite, t } = useApp();
+  const { isFavorited, toggleFavorite } = useApp();
   const [sortBy, setSortBy] = useState('popular');
   const items = menuData[activeCategory] || [];
 
@@ -34,19 +34,19 @@ export default function ProductGrid({ activeCategory, onAddToCart }: Props) {
         <div className="flex items-center gap-3">
           <h2 className="text-2xl font-extrabold text-gray-900">{activeCategory}</h2>
           <span className="bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full">
-            {items.length} {t.items}
+            {items.length} Items
           </span>
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-500">
-          <span>{t.sortBy}</span>
+          <span>Sort by:</span>
           <select
             value={sortBy}
             onChange={e => setSortBy(e.target.value)}
             className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-300 cursor-pointer hover:border-blue-300 transition-colors"
           >
-            <option value="popular">{t.popular}</option>
-            <option value="price-low">{t.priceLowHigh}</option>
-            <option value="price-high">{t.priceHighLow}</option>
+            <option value="popular">Popular</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
           </select>
         </div>
       </div>

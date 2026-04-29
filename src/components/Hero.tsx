@@ -1,18 +1,18 @@
 import { ShoppingCart } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { useApp } from '../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function Hero() {
-  const { t } = useApp();
+  const navigate = useNavigate();
   const [wordIndex, setWordIndex] = useState(0);
-  const words = [t.excellence, t.quality, t.flavor, t.experience];
+  const words = ['Excellence', 'Quality', 'Flavor', 'Experience'];
 
   useEffect(() => {
     const interval = setInterval(() => {
       setWordIndex(prev => (prev + 1) % words.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [words.length]);
+  }, []);
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-white min-h-[420px] flex items-center">
@@ -27,14 +27,14 @@ export default function Hero() {
         <div className="z-10">
           <div className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-1.5 shadow-sm border border-gray-100 mb-6 animate-fade-in">
             <span className="text-amber-400 text-base inline-block animate-pulse">✨</span>
-            <span className="text-gray-600 text-sm font-medium">{t.welcomeTo} {words[wordIndex]}</span>
+            <span className="text-gray-600 text-sm font-medium">Welcome to {words[wordIndex]}</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
-            {t.discoverTitle1} <br />
-            <span className="text-blue-600">{t.discoverTitle2}</span>
+            Discover Our <br />
+            <span className="text-blue-600">Delicious</span> Menu
           </h1>
           <p className="text-gray-500 text-base leading-relaxed mb-8 max-w-sm">
-            {t.heroDescription}
+            A fine selection of meals crafted with the freshest ingredients and the perfect blend of flavors.
           </p>
           <div className="flex items-center gap-4 flex-wrap">
             <button
@@ -46,7 +46,7 @@ export default function Hero() {
               }}
               className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-full font-semibold text-sm transition-all shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-200 hover:-translate-y-0.5 active:scale-95"
             >
-              {t.orderNow} <ShoppingCart size={16} />
+              Order Now <ShoppingCart size={16} />
             </button>
             <button
               onClick={() => {
@@ -57,7 +57,7 @@ export default function Hero() {
               }}
               className="flex items-center gap-2 border border-gray-300 hover:border-blue-300 text-gray-700 hover:text-blue-600 px-7 py-3 rounded-full font-semibold text-sm transition-all bg-white hover:-translate-y-0.5 active:scale-95"
             >
-              <span className="inline-block animate-bounce">✨</span> {t.viewSpecials}
+              <span className="inline-block animate-bounce">✨</span> View Specials
             </button>
           </div>
         </div>

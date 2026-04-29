@@ -1,40 +1,37 @@
 import { Leaf, ChefHat, Zap, Star } from 'lucide-react';
-import { useApp } from '../context/AppContext';
+
+const features = [
+  {
+    icon: Leaf,
+    title: 'Fresh Ingredients',
+    description: 'We use only the freshest and highest quality',
+    color: 'text-green-600',
+    bg: 'bg-green-50',
+  },
+  {
+    icon: ChefHat,
+    title: 'Expert Chefs',
+    description: 'Our chefs create magic in every dish',
+    color: 'text-blue-600',
+    bg: 'bg-blue-50',
+  },
+  {
+    icon: Zap,
+    title: 'Fast Service',
+    description: 'Quick delivery and excellent service',
+    color: 'text-amber-600',
+    bg: 'bg-amber-50',
+  },
+  {
+    icon: Star,
+    title: 'Best Quality',
+    description: 'Premium quality meals at affordable prices',
+    color: 'text-orange-600',
+    bg: 'bg-orange-50',
+  },
+];
 
 export default function Features() {
-  const { t } = useApp();
-
-  const features = [
-    {
-      icon: Leaf,
-      title: t.freshIngredients,
-      description: t.freshIngredientsDesc,
-      color: 'text-green-600',
-      bg: 'bg-green-50',
-    },
-    {
-      icon: ChefHat,
-      title: t.expertChefs,
-      description: t.expertChefsDesc,
-      color: 'text-blue-600',
-      bg: 'bg-blue-50',
-    },
-    {
-      icon: Zap,
-      title: t.fastService,
-      description: t.fastServiceDesc,
-      color: 'text-amber-600',
-      bg: 'bg-amber-50',
-    },
-    {
-      icon: Star,
-      title: t.bestQuality,
-      description: t.bestQualityDesc,
-      color: 'text-orange-600',
-      bg: 'bg-orange-50',
-    },
-  ];
-
   return (
     <section className="bg-gray-50 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 py-12">
