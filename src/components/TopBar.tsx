@@ -1,25 +1,29 @@
 import { Phone, MapPin, Clock, Facebook, Instagram, MessageCircle, ChevronDown } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { LangCode } from '../i18n/translations';
 
 const PHONE_NUMBER = '+251911234567';
 
-const languages: { code: LangCode; name: string }[] = [
-  { code: 'am', name: 'Amharic' },
-  { code: 'en', name: 'English' },
+const pinnedLanguages: { code: LangCode; name: string }[] = [
+  { code: 'en', name: 'EN' },
+  { code: 'am', name: 'አማ' },
+];
+
+const moreLanguages: { code: LangCode; name: string }[] = [
   { code: 'er', name: 'Eritrean' },
-  { code: 'fr', name: 'French' },
-  { code: 'hi', name: 'Hindi' },
-  { code: 'it', name: 'Italian' },
-  { code: 'om', name: 'Oromo' },
-  { code: 'es', name: 'Spanish' },
-  { code: 'ti', name: 'Tigrigna' },
+  { code: 'fr', name: 'Français' },
+  { code: 'hi', name: 'हिंदी' },
+  { code: 'it', name: 'Italiano' },
+  { code: 'om', name: 'Afaan Oromo' },
+  { code: 'es', name: 'Español' },
+  { code: 'ti', name: 'ትግርኛ' },
 ];
 
 export default function TopBar() {
   const { language, setLanguage, t } = useApp();
-  const [showLangMenu, setShowLangMenu] = useState(false);
+  const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handlePhoneClick = () => {
     window.location.href = `tel:${PHONE_NUMBER}`;
@@ -31,9 +35,23 @@ export default function TopBar() {
     whatsapp: `https://wa.me/251911234567`,
   };
 
+  const isMoreActive = moreLanguages.some(l => l.code === language);
+  const activeMoreLang = moreLanguages.find(l => l.code === language);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setShowMoreMenu(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
     <div className="bg-gray-50 border-b border-gray-200 py-2 px-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between text-sm text-gray-600">
+        {/* Left: contact info */}
         <div className="flex items-center gap-5">
           <button
             onClick={handlePhoneClick}
@@ -43,17 +61,20 @@ export default function TopBar() {
             <Phone size={13} className="text-blue-600 group-hover:scale-110 transition-transform" />
             <span className="hidden sm:inline">+251 94 221 9997</span>
           </button>
-          <span className="flex items-center gap-1.5 hidden md:flex">
+          <span className="items-center gap-1.5 hidden md:flex">
             <MapPin size={13} className="text-blue-600" />
             {t.location}
           </span>
-          <span className="flex items-center gap-1.5 hidden lg:flex">
+          <span className="items-center gap-1.5 hidden lg:flex">
             <Clock size={13} className="text-blue-600" />
             {t.hours}
           </span>
         </div>
+
+        {/* Right: social + language switcher */}
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-3">
+          {/* Social icons */}
+          <div className="items-center gap-3 hidden sm:flex">
             <a
               href={socialLinks.facebook}
               target="_blank"
@@ -82,33 +103,69 @@ export default function TopBar() {
               <MessageCircle size={15} />
             </a>
           </div>
-          <div className="relative">
-            <button
-              onClick={() => setShowLangMenu(!showLangMenu)}
-              className="flex items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors font-medium px-2 py-1"
-            >
-              {language.toUpperCase()} <ChevronDown size={13} className={`transition-transform ${showLangMenu ? 'rotate-180' : ''}`} />
-            </button>
-            {showLangMenu && (
-              <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
-                {languages.map(lang => (
-                  <button
-                    key={lang.code}
-                    onClick={() => {
-                      setLanguage(lang.code);
-                      setShowLangMenu(false);
-                    }}
-                    className={`w-full text-left px-4 py-2 text-sm transition-colors ${
-                      language === lang.code
-                        ? 'bg-blue-600 text-white font-semibold'
-                        : 'text-gray-700 hover:bg-gray-100'
-                    }`}
-                  >
-                    {lang.name}
-                  </button>
-                ))}
-              </div>
-            )}
+
+          {/* Language switcher */}
+          <div className="flex items-center gap-1">
+            {/* Pinned: EN and Amharic always visible */}
+            {pinnedLanguages.map(lang => (
+              <button
+                key={lang.code}
+                onClick={() => setLanguage(lang.code)}
+                className={`px-2.5 py-1 rounded-full text-xs font-semibold transition-all ${
+                  language === lang.code
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {lang.name}
+              </button>
+            ))}
+
+            {/* More dropdown */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setShowMoreMenu(prev => !prev)}
+                className={`flex items-center gap-0.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all ${
+                  isMoreActive
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {isMoreActive && activeMoreLang
+                  ? activeMoreLang.name.split(' ')[0].slice(0, 4)
+                  : 'More'}
+                <ChevronDown
+                  size={11}
+                  className={`transition-transform duration-200 ${showMoreMenu ? 'rotate-180' : ''}`}
+                />
+              </button>
+
+              {showMoreMenu && (
+                <div className="absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-xl shadow-xl z-50 overflow-hidden">
+                  <div className="py-1">
+                    {moreLanguages.map(lang => (
+                      <button
+                        key={lang.code}
+                        onClick={() => {
+                          setLanguage(lang.code);
+                          setShowMoreMenu(false);
+                        }}
+                        className={`w-full text-left px-4 py-2 text-sm transition-colors flex items-center justify-between ${
+                          language === lang.code
+                            ? 'bg-blue-600 text-white font-semibold'
+                            : 'text-gray-700 hover:bg-gray-50'
+                        }`}
+                      >
+                        <span>{lang.name}</span>
+                        {language === lang.code && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
